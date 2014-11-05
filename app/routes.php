@@ -15,3 +15,17 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+Route::get('/', 'HelpDeskController@indexAction');
+Route::get('/login', 'HelpDeskController@loginAction');
+Route::post('/logincheck', 'HelpDeskController@loginCheckAction');
+Route::get('/secure/browse', 'HelpDeskController@browseAction');
+Route::get('/logout', 'HelpDeskController@logoutAction');
+Route::get('/blog/add', 'BlogController@addAction');
+Route::get('/blog/delete/{id}', 'BlogController@deleteAction');
+Route::get('/blog/display', 'BlogController@displayAction');
+Route::get('/blog/edit/{id}', 'BlogController@editAction');
+Route::post('/blog/save', 'BlogController@saveAction');
+Route::post('/blog/save/{id}', 'BlogController@saveAction');
+// Set default route to match all other cases 
+Route::any('{all}', 'BlogController@indexAction')->where('all', '.*');
+
