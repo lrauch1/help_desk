@@ -43,8 +43,8 @@ class HelpDeskController extends BaseController {
     }
 
     public function browseAction() {
-        if (Session::get('auth') == 1)
-            return View::make('browse');
+        $tickets = Ticket::with('creator')->with('tech')->get();
+        if(Session::get('auth')==1) return View::make('browse')->with('tickets', $tickets);
         else
             return Redirect::to('/login');
     }

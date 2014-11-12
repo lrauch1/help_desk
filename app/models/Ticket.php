@@ -14,4 +14,11 @@
 class Ticket extends Eloquent {
     	protected $table = 'ticket';
 	public	$timestamps =  false;
+        
+    public function creator() {
+        return $this->belongsTo('User','creator_id');
+    }
+    public function tech() {
+        return $this->belongsTo('User','tech_id');
+    }        
 }
