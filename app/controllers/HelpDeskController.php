@@ -118,5 +118,54 @@ class HelpDeskController extends BaseController {
 
         return Redirect::to("/secure/details/" . $ticket->id);
     }
-
+ public function settingsAction() {
+        return View::make('settings');
+    }
+    public function updateAction($table, $id) {
+        switch($table){
+            case "user":
+                //first check if we're updating ourselves
+                if($id==Session::get('me')->id){
+                    //we are, so we can use our session object to save a query
+                    $me = Session::get('me');
+                    //and we need to verify the password too
+                    if(!$me->checkPassword($_POST['opword']))
+                        return Redirect::to("/secure/settings?badpass");
+                    //and double check for spelling mistakes
+                    if($_POST['npword']!=$_POST['cpword'])
+                        return Redirect::to("/secure/settings?badconfirm");
+                    //now we need to update our user object
+                    $me->fname=htmlentities($_POST['fname']);
+                    $me->lname=htmlentities($_POST['lname']);
+                    $me->uname=htmlentities($_POST['uname']);
+                    //password is a bit different
+                    $me->pword=$me->hashPassword($_POST['npword']);
+                    //and save it
+                    $me->save();
+                }else{
+                    //not updating ourselves, so we have to start out by getting the user
+                    $user=User::find($id);
+                    //update info
+                    $user->fname=htmlentities($_POST['fname']);
+                    $user->lname=htmlentities($_POST['lname']);
+                    $user->uname=htmlentities($_POST['uname']);
+                    //password is a bit different
+                    $user->password=$user->hashPassword($_POST['npword']);
+                    //and save the object
+                    $user->save();
+                }
+                break;
+            case "message":
+                break;
+            case "ticket":
+                break;
+            default:
+                die("Something went wrong!");//we should never get here unless i break something
+        }
+        //multiple pages link here
+        //so we need to see if they left us an url to go back to
+        //defaulting to account settings if not (because everyone can access that)
+        $url=Session::has('updateBackUrl')?Session::pull('updateBackUrl'):"/secure/settings";
+        return Redirect::to($url."?updated");
+    }
 }

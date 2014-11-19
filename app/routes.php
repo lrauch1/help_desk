@@ -24,12 +24,8 @@ Route::get('/secure/details/{id}', 'HelpDeskController@detailsAction');
 Route::post('/secure/details/{id}', 'HelpDeskController@newMsgAction');
 Route::get('/secure/new', 'HelpDeskController@newTicketAction');
 Route::post('/secure/new', 'HelpDeskController@processNewTicketAction');
-Route::get('/blog/add', 'BlogController@addAction');
-Route::get('/blog/delete/{id}', 'BlogController@deleteAction');
-Route::get('/blog/display', 'BlogController@displayAction');
-Route::get('/blog/edit/{id}', 'BlogController@editAction');
-Route::post('/blog/save', 'BlogController@saveAction');
-Route::post('/blog/save/{id}', 'BlogController@saveAction');
+Route::get('/secure/settings', 'HelpDeskController@settingsAction');
+Route::post('/secure/update/{table}/{id}', 'HelpDeskController@updateAction');
 // Set default route to match all other cases 
 Route::any('{all}', 'BlogController@indexAction')->where('all', '.*');
 

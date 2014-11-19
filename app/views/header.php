@@ -26,6 +26,9 @@ echo <<<EOD
                 <td>
                     <a href="/secure/browse">Home</a>
                 </td>
+                <td>       
+                <a href="/secure/settings">Account Settings</a>
+                </td>     
                 <td>
                     <a href="/logout">Logout</a>
                 </td>
