@@ -26,5 +26,6 @@ and open the template in the editor.
                 </tr>
             </form>
         </table>
+        <a href="/register">Register</a>
     </body>
 </html>

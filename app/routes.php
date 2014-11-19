@@ -26,6 +26,8 @@ Route::get('/secure/new', 'HelpDeskController@newTicketAction');
 Route::post('/secure/new', 'HelpDeskController@processNewTicketAction');
 Route::get('/secure/settings', 'HelpDeskController@settingsAction');
 Route::post('/secure/update/{table}/{id}', 'HelpDeskController@updateAction');
+Route::get('/register', 'HelpDeskController@registerAction');
+Route::post('/register', 'HelpDeskController@addUserAction');
 // Set default route to match all other cases 
 Route::any('{all}', 'BlogController@indexAction')->where('all', '.*');
 

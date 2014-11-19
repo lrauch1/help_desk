@@ -168,4 +168,33 @@ class HelpDeskController extends BaseController {
         $url=Session::has('updateBackUrl')?Session::pull('updateBackUrl'):"/secure/settings";
         return Redirect::to($url."?updated");
     }
+    
+     public function registerAction() {
+        return View::make('register');
+    }
+    public function addUserAction() {
+        //first, confirm they typed their password correctly
+        if($_POST['pword']!=$_POST['cpword'])
+            return Redirect::to('/register?badconfirm');
+        //next, we need a new user object
+        $user=new User();
+        //fill up data
+        $user->fname=htmlentities($_POST['fname']);
+        $user->lname=htmlentities($_POST['lname']);
+        $user->uname=htmlentities($_POST['uname']);
+        $user->salt=substr(sha1(sha1(time())),-10);
+        //password is a bit more complex
+        $user->pword=$user->hashPassword($_POST['pword']);
+        //we only want to register them as a bog-standard user
+        //anything else requires direct admin configuration
+        $user->type="User";
+        //and finally, save the object to the database
+        $user->save();
+        
+        //now we need to manually authenticate them
+        Session::put('me',$user);
+        Session::put('auth',1);
+        //and send them to the home page
+        return Redirect::to("/secure/browse");
+    }
 }
