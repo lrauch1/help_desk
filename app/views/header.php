@@ -4,8 +4,8 @@ $ses = Session::all();
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/javascript.js"></script>
-        <script src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
+        <script src="/javascript.js"></script> 
+        <script src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script> 
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.min.css"> 
        <script>
             $(document).ready(function(){$("#sortme").DataTable();});

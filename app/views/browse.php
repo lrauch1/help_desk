@@ -37,7 +37,11 @@ foreach ($toDisplay as $ticket) {
 echo<<<EOD
     <tr>
         <td>{$ticket->status}</td>
-        <td>{$ticket->subject}</td>
+                <td>
+            <a href="/secure/details/{$ticket->id}">
+                {$ticket->subject}
+            </a>
+        </td>
         <td>{$ticket->priority}/5</td>
         <td>{$ticket->creator->fname} {$ticket->creator->lname}</td>
         <td>{$ticket->created}</td>
@@ -48,7 +52,8 @@ EOD;
 echo<<<EOD
 </tbody>
 </table>
+<a href="/secure/new">New Ticket</a>
 </body>
 </html>
 EOD;
-var_dump($toDisplay);
+//var_dump($ticket);
