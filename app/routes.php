@@ -28,6 +28,31 @@ Route::get('/secure/settings', 'HelpDeskController@settingsAction');
 Route::post('/secure/update/{table}/{id}', 'HelpDeskController@updateAction');
 Route::get('/register', 'HelpDeskController@registerAction');
 Route::post('/register', 'HelpDeskController@addUserAction');
-// Set default route to match all other cases 
-Route::any('{all}', 'BlogController@indexAction')->where('all', '.*');
+Route::get('/admin/tickets', 'HelpDeskController@adminTicketsAction');
+Route::get('/admin/editTicket/{id}', 'HelpDeskController@adminEditTicketAction');
+
+//session.auth being 0 means manually logged out
+//" being 1 means logged in to regular site (url starting in "/secure/*")
+//" being 2 means logged in to admin site (url starting in "/admin")
+Route::filter('secure', function()
+{
+    if (!Session::has('auth') || Session::get('auth') == 0)
+    {
+        return Redirect::to('/login');
+    }
+});
+Route::when('secure/*', 'secure');
+Route::filter('admin', function()
+{
+    if (Session::get('auth') != 2)
+    {
+        if (!Session::has('auth') || Session::get('auth') == 0)
+        {
+            return Redirect::to('/login');
+        }else{
+            return Redirect::to('/login?admin');//must authenticate twice to log into admin panel
+        }
+    }
+});
+Route::when('admin/*', 'admin');
 

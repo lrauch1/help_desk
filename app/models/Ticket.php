@@ -15,6 +15,8 @@ class Ticket extends Eloquent {
     	protected $table = 'ticket';
 	public	$timestamps =  false;
         
+         public static $status_types=array('New','In Progress','Closed','Cancelled','Stalled');
+        
     public function creator() {
         return $this->belongsTo('User','creator_id');
     }
