@@ -57,11 +57,46 @@ class HelpDeskController extends BaseController {
     }
 
     public function newMsgAction($id) {
+        $msgtext = htmlentities($_POST['msg']);
+
+        $ticket = Ticket::find($id);
+        if ($_POST['status'] != $ticket->status) {
+            switch ($_POST['status']) {
+                case "In Progress":
+                    if ($ticket->status == "New") {
+                        //assign current user to ticket
+                        $ticket->tech_id = Session::get('me')->id;
+                        //add note to message
+                        $msgtext .= "<br>"
+                                . "<span class=small>"
+                                . Session::get('me')->fname
+                                . " was assigned to this ticket"
+                                . "</span>";
+                    }
+                    break;
+                case "Stalled":
+                    //don't need to do anything here
+                    break;
+                case "Cancelled":
+                case "Closed":
+                    $ticket->closed = date("Y-m-d H:i:s");
+                    break;
+                default:
+                    die("Something broke!"); //should never get here unless i break something
+            }
+            $msgtext .= "<br>"
+                    . "<span class=small>"
+                    . "Status: '{$ticket->status}' -> '{$_POST['status']}'"
+//no sanitization bc it wouldnt have matched the case statement if there was html in it
+                    . "</span>";
+        }
+        $ticket->status = $_POST['status'];
         $msg = new Message();
         $msg->ticket_id = $id;
         $msg->user_id = Session::get('me')->id;
-        $msg->text = htmlentities($_POST['msg']);
+        $msg->text = $msgtext;
         $msg->save();
+        $ticket->save();
         return Redirect::to("/secure/details/$id");
     }
 

@@ -48,11 +48,26 @@ echo<<<EOD
 </tr>
 EOD;
 }
+$disabler = ($ticket->status=="Closed" || $ticket->status=="Cancelled")? "disabled": "enabled";
+//disables inputs if ticket is closed or cancelled
 echo<<<EOD
     <tr>
             <td>{$ses['me']->fname} {$ses['me']->lname}</td>
-            <td><input type=submit value=Send style="float:right"></td>
-            <td><input type=text name=msg style="width:100%"></td>
+                        <td>Change Status: <select name=status {$disabler}>
+EOD;
+echo "<option selected>{$ticket->status}</option>";
+if(($ticket->status=="New" || $ticket->status=="Stalled")&&($ses['me']->type=="Technician"||$ses['me']->type=="Admin"))
+echo '<option>In Progress</option>';
+if(($ticket->status=="New" || $ticket->status=="In Progress" || $ticket->status=="Stalled")&&($ses['me']->type=="Technician"||$ses['me']->type=="Admin"))
+echo '<option>Closed</option>';
+if(($ticket->status=="In Progress" || $ticket->status=="New" || $ticket->status=="Stalled")&& $ses['me']->type=="User")
+echo '<option>Cancelled</option>';
+if($ticket->status=="In Progress"&&($ses['me']->type=="Technician"||$ses['me']->type=="Admin"))
+echo '<option>Stalled</option>';
+echo<<<EOD
+                </select><br><center><input type=submit value=Send {$disabler}></center>
+            </td>
+            <td><input type=text name=msg style="width:100%" autocomplete=no {$disabler}></td>
     </tr>
 </table>
 </form>
