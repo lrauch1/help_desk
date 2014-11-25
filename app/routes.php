@@ -30,6 +30,9 @@ Route::get('/register', 'HelpDeskController@registerAction');
 Route::post('/register', 'HelpDeskController@addUserAction');
 Route::get('/admin/tickets', 'HelpDeskController@adminTicketsAction');
 Route::get('/admin/editTicket/{id}', 'HelpDeskController@adminEditTicketAction');
+Route::get('/admin/accounts', 'HelpDeskController@adminAccountsAction');
+Route::get('/admin/editAccount/new', 'HelpDeskController@adminNewAccountAction');
+Route::get('/admin/editAccount/{id}', 'HelpDeskController@adminEditAccountAction');
 
 //session.auth being 0 means manually logged out
 //" being 1 means logged in to regular site (url starting in "/secure/*")

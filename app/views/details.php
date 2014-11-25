@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-//var_dump($ticket);
 echo<<<EOD
 <table border=1 style="width:100%;">
 <thead>

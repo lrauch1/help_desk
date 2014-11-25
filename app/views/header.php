@@ -4,7 +4,8 @@ $ses = Session::all();
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/javascript.js"></script> 
+     <!--   <script src="//efalder.ca/jquery-2.1.1.min.js"></script> -->
+        <script src="/js.js"></script>
         <script src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script> 
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.min.css"> 
         <script>
@@ -14,6 +15,16 @@ $ses = Session::all();
         </script>
         <meta charset="UTF-8">
         <title></title>
+        <?php
+        if (isset($_GET['updated']))
+            echo<<<'EOD'
+<script>
+    $(document).ready(function(){
+        $('#update').fadeIn('slow').delay(3000).fadeOut('slow');
+    });
+</script>
+EOD;
+        ?>
     </head>
     <body>
         <table border=1 style="width:100%;">
@@ -29,8 +40,8 @@ $ses = Session::all();
                     <a href="/secure/browse">Home</a>
                 </td>
 EOD;
-if($ses['me']->type=="Admin")
-    echo<<<EOD
+                    if ($ses['me']->type == "Admin")
+                        echo<<<EOD
     <td>
         <a href="/admin/tickets">Admin Controls</a>
     </td>

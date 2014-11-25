@@ -24,5 +24,13 @@
             <th></th>
             <td><input type="submit"></td>
         </tr>
+        <tr>
+            <td colspan="2" style="textalign:center;">
+                <?php
+                    if(isset($_GET['badconfirm']))
+                        echo "<span style='colour:red;'>Passwords Don't Match!</span>";
+                ?>
+            </td>
+        </tr>
     </table>
 </form>

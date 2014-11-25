@@ -1,6 +1,7 @@
 <?php
 include 'header.php';
 echo <<<EOD
+<h2 style="text-align:center;display:none;" id=update>Settings Updated!</h2>
 <form method="post" action="/secure/update/user/{$ses['me']->id}">
     <table border="1">
         <tr>
@@ -30,6 +31,16 @@ echo <<<EOD
         <tr>
             <th></th>
             <td><input type="submit"></td>
+        </tr>
+            <tr>
+            <td colspan="2" style="textalign:center;">
+EOD;
+    if(isset($_GET['badpass']))
+        echo "<span style='colour:red;'>Incorrect Password!</span>";
+    if(isset($_GET['badconfirm']))
+        echo "<span style='colour:red;'>New Passwords Don't Match!</span>";
+echo<<<EOD
+            </td>
         </tr>
     </table>
 </form>
