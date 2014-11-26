@@ -36,9 +36,9 @@ echo <<<EOD
             <td colspan="2" style="textalign:center;">
 EOD;
     if(isset($_GET['badpass']))
-        echo "<span style='colour:red;'>Incorrect Password!</span>";
+        echo "<span style='color:red;'>Incorrect Password!</span>";
     if(isset($_GET['badconfirm']))
-        echo "<span style='colour:red;'>New Passwords Don't Match!</span>";
+        echo "<span style='color:red;'>New Passwords Don't Match!</span>";
 echo<<<EOD
             </td>
         </tr>

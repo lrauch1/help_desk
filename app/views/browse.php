@@ -31,7 +31,7 @@ switch($ses['me']->type){
                 $toDisplay[] = $ticket;
         break;
     default:
-        die("Something broke!");//we should never get to here unless i break something
+        die("Something broke!");//we should never get to here unless something breaks
 }
 foreach ($toDisplay as $ticket) {
 echo<<<EOD
